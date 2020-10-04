@@ -1,5 +1,9 @@
 import 'package:alice_store/helpers/validators.dart';
+import 'package:alice_store/models/User.dart';
+import 'package:alice_store/models/user_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
 
@@ -67,7 +71,12 @@ class LoginScreen extends StatelessWidget {
                   child: RaisedButton(
                     onPressed: (){
                       if(formKey.currentState.validate()){
-                        print(emailController.text);
+                        context.read<UserManager>().signIn(
+                          UserData(
+                            email: emailController.text,
+                            password: passController.text
+                          )
+                        );
                       }
                     },
                     color: Theme.of(context).primaryColor,
