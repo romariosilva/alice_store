@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "217837278168",
+    "firebase_url": "https://alice-store.firebaseio.com",
+    "project_id": "alice-store",
+    "storage_bucket": "alice-store.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217837278168:android:66d6e15b04c826e44658ad",
+        "android_client_info": {
+          "package_name": "com.devaly.alice_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217837278168-jocsj3bodk7lobp3jpacok6aeso6ulh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNiLK6CJfrJRvHaVrKI9NwHTUXiOnrRbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217837278168-jocsj3bodk7lobp3jpacok6aeso6ulh4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
