@@ -11,10 +11,12 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController passController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: const Text('Entrar'),
         centerTitle: true,
@@ -72,10 +74,21 @@ class LoginScreen extends StatelessWidget {
                     onPressed: (){
                       if(formKey.currentState.validate()){
                         context.read<UserManager>().signIn(
-                          UserData(
+                          user: UserData(
                             email: emailController.text,
                             password: passController.text
-                          )
+                          ),
+                          onFail: (e){
+                            scaffoldKey.currentState.showSnackBar(
+                              SnackBar(
+                                content: Text('Falha ao entrar: $e'),
+                                backgroundColor: Colors.red,
+                              )
+                            );
+                          },
+                          onSuccess: (){
+                            print('Sucesso');
+                          }
                         );
                       }
                     },
