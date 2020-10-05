@@ -3,7 +3,7 @@ import 'package:alice_store/models/UserData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-class UserManager  extends ChangeNotifier{
+class UserManager extends ChangeNotifier{
 
   UserManager(){
     _loadCurrentUser();
@@ -36,6 +36,23 @@ class UserManager  extends ChangeNotifier{
       onFail(getErrorString(e.code));   
     }
     loading = false;
+  }
+
+  //Função para fazer o cadastro
+  Future<void> signUp({UserData user, Function onFail, Function onSuccess}) async{
+    loading = true;
+    try{
+      final UserCredential result = await auth.createUserWithEmailAndPassword(
+        email: user.email, 
+        password: user.password
+      );
+
+      this.user = result.user;
+
+      onSuccess();
+    } on FirebaseAuthException catch(e){
+      onFail(getErrorString(e.code));
+    }
   }
 
   //método para quando o usuário já estiver logado, entrar logo

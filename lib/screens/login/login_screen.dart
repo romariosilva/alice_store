@@ -1,7 +1,6 @@
 import 'package:alice_store/helpers/validators.dart';
 import 'package:alice_store/models/UserData.dart';
 import 'package:alice_store/models/user_manager.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +19,18 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Entrar'),
         centerTitle: true,
+        actions: [
+          FlatButton(
+            onPressed: (){
+              Navigator.of(context).pushReplacementNamed('/signup');
+            }, 
+            textColor: Colors.white,
+            child: const Text(
+              'CRIAR CONTA',
+              style: TextStyle(fontSize: 14),
+            ),
+          )
+        ],
       ),
       body: Center(
         child: Card(
@@ -91,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                                 );
                               },
                               onSuccess: (){
-                                print('Sucesso');
+                                //print('Sucesso');
                               }
                             );
                           }

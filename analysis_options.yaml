@@ -3,3 +3,4 @@ include: package:lint/analysis_options.yaml
 linter:
   rules:
     curly_braces_in_flow_control_structures: false
+    lowercase_with_underscores: false
