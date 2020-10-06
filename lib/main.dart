@@ -1,5 +1,6 @@
 import 'package:alice_store/models/user_manager.dart';
 import 'package:alice_store/screens/base/base_screen.dart';
+import 'package:alice_store/screens/login/login_screen.dart';
 import 'package:alice_store/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => UserManager(),
+      lazy: false,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Alice Store',
@@ -31,6 +33,11 @@ class MyApp extends StatelessWidget {
         initialRoute: '/base',
         onGenerateRoute: (settings){
           switch (settings.name) {
+            case '/login':
+              return MaterialPageRoute(
+                builder: (_) => LoginScreen()
+              );
+              break;
             case '/signup':
               return MaterialPageRoute(
                 builder: (_) => SignUpScreen()

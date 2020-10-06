@@ -1,5 +1,5 @@
 import 'package:alice_store/helpers/validators.dart';
-import 'package:alice_store/models/UserData.dart';
+import 'package:alice_store/models/user_data.dart';
 import 'package:alice_store/models/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                                 );
                               },
                               onSuccess: (){
-                                //print('Sucesso');
+                                Navigator.of(context).pop();
                               }
                             );
                           }

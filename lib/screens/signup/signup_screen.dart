@@ -1,5 +1,5 @@
 import 'package:alice_store/helpers/validators.dart';
-import 'package:alice_store/models/UserData.dart';
+import 'package:alice_store/models/user_data.dart';
 import 'package:alice_store/models/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -109,8 +109,7 @@ class SignUpScreen extends StatelessWidget {
                         context.read<UserManager>().signUp(
                           user: user,
                           onSuccess: (){  
-                            debugPrint('Sucesso');
-                            //TODO: POP
+                            Navigator.of(context).pop();
                           },
                           onFail: (e){
                             scaffoldKey.currentState.showSnackBar(
