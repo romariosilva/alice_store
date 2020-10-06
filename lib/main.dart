@@ -1,3 +1,4 @@
+import 'package:alice_store/models/product_manager.dart';
 import 'package:alice_store/models/user_manager.dart';
 import 'package:alice_store/screens/base/base_screen.dart';
 import 'package:alice_store/screens/login/login_screen.dart';
@@ -16,9 +17,17 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserManager(),
-      lazy: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserManager(),
+          lazy: false,
+        ),
+        Provider(
+          create: (_) => ProductManager(),
+          lazy: false,
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Alice Store',
