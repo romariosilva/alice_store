@@ -1,8 +1,9 @@
 import 'package:alice_store/models/item_size.dart';
 import 'package:alice_store/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
-class CartProduct {
+class CartProduct extends ChangeNotifier{
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -51,6 +52,18 @@ class CartProduct {
   //Método que verifica se pode juntar no mesmo card um produto se tiver o mesmo tamanho e ID
   bool stackable(Product product){
     return product.idProduct == productId && product.selectedSize.name == size;
+  }
+
+  //aumentar a quantidade
+  void increment(){
+    quantity++;
+    notifyListeners();
+  }
+
+  //diminuir a quantidade
+  void decrement(){
+    quantity--;
+    notifyListeners();
   }
 
 }

@@ -17,9 +17,14 @@ class CartManager {
       e.quantity++;
     } catch (e){
       final cartProduct = CartProduct.fromProduct(product);
+      cartProduct.addListener(_onItemUpdated);
       items.add(cartProduct);
       user.cartReference.add(cartProduct.toCartItemMap());
     }
+  }
+
+  void _onItemUpdated(){
+    print('Atualizado');
   }
 
   //Método para ao mudar o usuário, poder carregar o cart deste
@@ -36,7 +41,9 @@ class CartManager {
   Future<void> _loadCartItems() async{
     final QuerySnapshot cartSnap = await user.cartReference.get();
 
-    items = cartSnap.docs.map((d) => CartProduct.fromDocument(d)).toList();
+    items = cartSnap.docs.map(
+      (d) => CartProduct.fromDocument(d)..addListener(_onItemUpdated)
+    ).toList();
   }
 
 }
