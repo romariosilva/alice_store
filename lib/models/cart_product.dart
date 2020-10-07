@@ -7,6 +7,8 @@ class CartProduct extends ChangeNotifier{
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  String idDocument;
+
   String productId;
   int quantity;
   String size;
@@ -21,6 +23,7 @@ class CartProduct extends ChangeNotifier{
 
   //Buscando o cart do usuário no Firebase
   CartProduct.fromDocument(DocumentSnapshot document){
+    idDocument = document.id;
     productId = document.data()['pid'] as String;
     quantity = document.data()['quantity'] as int;
     size = document.data()['size'] as String;
