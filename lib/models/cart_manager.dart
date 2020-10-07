@@ -47,6 +47,7 @@ class CartManager extends ChangeNotifier{
 
       if(cartProduct.quantity == 0){
         removeOfCart(cartProduct);
+        i--;
         continue;
       }
 
@@ -54,7 +55,7 @@ class CartManager extends ChangeNotifier{
 
       _updateCartProduct(cartProduct);
     }
-    print(productsPrice);
+    notifyListeners();
   }
 
   void _updateCartProduct(CartProduct cartProduct){
