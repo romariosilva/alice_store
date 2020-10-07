@@ -1,3 +1,4 @@
+import 'package:alice_store/models/cart_manager.dart';
 import 'package:alice_store/models/product.dart';
 import 'package:alice_store/models/user_manager.dart';
 import 'package:carousel_pro/carousel_pro.dart';
@@ -113,7 +114,8 @@ class ProductScreen extends StatelessWidget {
                             textColor: Colors.white,
                             onPressed: product.selectedSize != null ? (){
                               if(userManager.isLoggedIn){
-                                //TODO: ADCIONAR AO CARRINHO
+                                context.read<CartManager>().addToCart(product);
+                                Navigator.of(context).pushNamed('/cart');
                               } else {
                                 Navigator.of(context).pushNamed('/login');
                               }
