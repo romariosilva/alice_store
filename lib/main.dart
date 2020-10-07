@@ -1,4 +1,5 @@
 import 'package:alice_store/models/cart_manager.dart';
+import 'package:alice_store/models/home_manager.dart';
 import 'package:alice_store/models/product.dart';
 import 'package:alice_store/models/product_manager.dart';
 import 'package:alice_store/models/user_manager.dart';
@@ -21,6 +22,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Providers para que assim que o App inicie, esses arquivos iniciem juntos.
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -29,6 +31,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ProductManager(),
+          lazy: false,
+        ),
+        Provider(
+          create: (_) => HomeManager(),
           lazy: false,
         ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
