@@ -11,6 +11,8 @@ class CartManager extends ChangeNotifier{
 
   UserData user;
 
+  num productsPrice = 0.0;
+
   //Adcionar o produto ao carrinho, enviá-lo para o Firebase
   void addToCart(Product product){
     try{
@@ -23,6 +25,7 @@ class CartManager extends ChangeNotifier{
       user.cartReference.add(cartProduct.toCartItemMap()).then(
         (doc) => cartProduct.idDocument = doc.id
       );
+      _onItemUpdated();
     }
     notifyListeners();
   }
@@ -37,17 +40,26 @@ class CartManager extends ChangeNotifier{
 
   // Adiciona a quantidade no Firebase
   void _onItemUpdated(){
-    for(final cartProduct in items){
+    productsPrice = 0.0;
+
+    for(int i=0; i<items.length; i++){
+      final cartProduct = items[i];
+
       if(cartProduct.quantity == 0){
         removeOfCart(cartProduct);
+        continue;
       }
+
+      productsPrice += cartProduct.totalPrice;
 
       _updateCartProduct(cartProduct);
     }
+    print(productsPrice);
   }
 
   void _updateCartProduct(CartProduct cartProduct){
-    user.cartReference.doc(cartProduct.idDocument).update(cartProduct.toCartItemMap());
+    if(cartProduct.idDocument != null)
+      user.cartReference.doc(cartProduct.idDocument).update(cartProduct.toCartItemMap());
   }
 
   //Método para ao mudar o usuário, poder carregar o cart deste
@@ -67,6 +79,14 @@ class CartManager extends ChangeNotifier{
     items = cartSnap.docs.map(
       (d) => CartProduct.fromDocument(d)..addListener(_onItemUpdated)
     ).toList();
+  }
+
+  //Verificando se tem estoqe suficiente
+  bool get isCartValid{
+    for(final cartProduct in items){
+      if(!cartProduct.hasStock) return false;
+    }
+    return true;
   }
 
 }
