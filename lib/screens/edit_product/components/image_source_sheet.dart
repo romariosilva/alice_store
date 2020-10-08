@@ -2,8 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ImageSourceSheet extends StatelessWidget {
+
+  final ImagePicker picker = ImagePicker();
+
+  final Function(File) onImageSelected;
+
+  ImageSourceSheet({this.onImageSelected});
+
   @override
   Widget build(BuildContext context) {
     if(Platform.isAndroid)
@@ -14,14 +22,16 @@ class ImageSourceSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             FlatButton(
-              onPressed: (){
-
+              onPressed: () async{
+                final PickedFile file = await picker.getImage(source: ImageSource.camera);
+                onImageSelected(File(file.path));
               }, 
               child: const Text('Câmera')
             ),
             FlatButton(
-              onPressed: (){
-
+              onPressed: () async{
+                final PickedFile file = await picker.getImage(source: ImageSource.gallery);
+                onImageSelected(File(file.path));
               }, 
               child: const Text('Galeria')
             ),
