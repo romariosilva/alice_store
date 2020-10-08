@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'components/section_list.dart';
+import 'components/section_staggered.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -51,7 +52,7 @@ class HomeScreen extends StatelessWidget {
                         case 'List':
                           return SectionList(section);
                         case 'Staggered':
-                          return Container();
+                          return SectionStaggered(section);
                         default:
                           return Container();
                       }

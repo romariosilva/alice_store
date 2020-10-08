@@ -1,4 +1,5 @@
 import 'package:alice_store/models/section.dart';
+import 'package:alice_store/screens/home/components/item_tile.dart';
 import 'package:flutter/material.dart';
 
 import 'section_header.dart';
@@ -12,7 +13,7 @@ class SectionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -22,13 +23,7 @@ class SectionList extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index){
-                return AspectRatio(
-                  aspectRatio: 1,
-                  child: Image.network(
-                    section.items[index].image,
-                    fit: BoxFit.cover,
-                  )
-                );
+                return ItemTile(section.items[index]);
               }, 
               separatorBuilder: (_, __) => const SizedBox(width: 4), 
               itemCount: section.items.length
