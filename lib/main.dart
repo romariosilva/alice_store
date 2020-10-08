@@ -1,3 +1,4 @@
+import 'package:alice_store/models/admin_users_manager.dart';
 import 'package:alice_store/models/cart_manager.dart';
 import 'package:alice_store/models/home_manager.dart';
 import 'package:alice_store/models/product.dart';
@@ -42,7 +43,13 @@ class MyApp extends StatelessWidget {
           lazy: false,
           update: (_, userManager, cartManager) =>
             cartManager..updateUser(userManager),
-        )
+        ),
+        ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
+          create: (_) => AdminUsersManager(),
+          lazy: false,
+          update: (_, userManager, adminUsersManager) =>
+            adminUsersManager..updateUser(userManager),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
