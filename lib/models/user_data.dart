@@ -7,6 +7,7 @@ class UserData {
   String password;
   String name;
   String confirmPassword;
+  bool admin = false;
 
   UserData({this.email, this.password, this.name, this.confirmPassword, this.id});
 
