@@ -6,6 +6,7 @@ import 'package:alice_store/models/product_manager.dart';
 import 'package:alice_store/models/user_manager.dart';
 import 'package:alice_store/screens/base/base_screen.dart';
 import 'package:alice_store/screens/cart/cart_screen.dart';
+import 'package:alice_store/screens/edit_product/edit_product_screen.dart';
 import 'package:alice_store/screens/login/login_screen.dart';
 import 'package:alice_store/screens/product/product_screen.dart';
 import 'package:alice_store/screens/signup/signup_screen.dart';
@@ -85,6 +86,13 @@ class MyApp extends StatelessWidget {
             case '/cart':
               return MaterialPageRoute(
                 builder: (_) => CartScreen()
+              );
+              break;
+            case '/edit_product':
+              return MaterialPageRoute(
+                builder: (_) => EditProductScreen(
+                  settings.arguments as Product
+                )
               );
               break;
             case '/base':
