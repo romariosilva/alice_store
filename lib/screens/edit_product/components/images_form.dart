@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:alice_store/models/product.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'image_source_sheet.dart';
@@ -50,10 +51,16 @@ class ImagesForm extends StatelessWidget {
                       color: primaryColor,
                       iconSize: 50,
                       onPressed: (){
-                        showModalBottomSheet(
-                          context: context, 
-                          builder: (_) => ImageSourceSheet()
-                        );
+                        if(Platform.isAndroid)
+                          showModalBottomSheet(
+                            context: context, 
+                            builder: (_) => ImageSourceSheet()
+                          );
+                        else
+                          showCupertinoModalPopup(
+                            context: context, 
+                            builder: (_) => ImageSourceSheet()
+                          ); 
                       },
                     ),
                   ),
