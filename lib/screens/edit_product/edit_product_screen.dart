@@ -7,7 +7,9 @@ class EditProductScreen extends StatelessWidget {
 
   final Product product;
 
-  const EditProductScreen(this.product);
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+  EditProductScreen(this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +18,21 @@ class EditProductScreen extends StatelessWidget {
         title: const Text('Editar Anúncio'),
         centerTitle: true
       ),
-      body: ListView(
-        children: [
-          ImagesForm(product),
-        ],
+      backgroundColor: Colors.white,
+      body: Form(
+        key: formkey,
+        child: ListView(
+          children: [
+            ImagesForm(product),
+            RaisedButton(
+              onPressed: (){
+                if(formkey.currentState.validate())
+                  print('Válido!!');
+              },
+              child: const Text('Salvar'),
+            )
+          ],
+        ),
       ),
     );
   }

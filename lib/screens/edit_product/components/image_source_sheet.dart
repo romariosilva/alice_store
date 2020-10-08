@@ -13,6 +13,7 @@ class ImageSourceSheet extends StatelessWidget {
 
   ImageSourceSheet({this.onImageSelected});
 
+  //Método para corta e rotacionar a imagem
   Future<void> editImage(String path, BuildContext context) async{
     final File croppedFile = await ImageCropper.cropImage(
       sourcePath: path,
