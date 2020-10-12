@@ -6,6 +6,8 @@ class HomeManager extends ChangeNotifier {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  bool editing = false;
+
   List<Section> sections = [];
 
   //Assim que iniciar o app já carrega o _loadSections
@@ -22,6 +24,23 @@ class HomeManager extends ChangeNotifier {
       }
       notifyListeners();
     });
+  }
+
+  //Entrar no modo de edição
+  void enterEditing(){
+    editing = true;
+    notifyListeners();
+  }
+
+  //Funções abaixo para salvar e descartar as edições feitas na tela Home
+  void saveEditing(){
+    editing = false;
+    notifyListeners();
+  }
+
+  void discardEditing(){
+    editing = false;
+    notifyListeners();
   }
 
 }
