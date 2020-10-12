@@ -8,7 +8,15 @@ class HomeManager extends ChangeNotifier {
 
   bool editing = false;
 
-  List<Section> sections = [];
+  List<Section> _sections = [];
+  List<Section> _editingSections = [];
+  List<Section> get sections {
+    if(editing){
+      return _editingSections;
+    } else {
+      return _sections;
+    }
+  }
 
   //Assim que iniciar o app já carrega o _loadSections
   HomeManager(){
@@ -18,9 +26,9 @@ class HomeManager extends ChangeNotifier {
   //Carregar todos as seções para a tela home
   Future<void> _loadSections() async {
     firestore.collection('home').snapshots().listen((snapshot) { 
-      sections.clear();
+      _sections.clear();
       for(final DocumentSnapshot document in snapshot.docs){
-        sections.add(Section.fromDocument(document));
+        _sections.add(Section.fromDocument(document));
       }
       notifyListeners();
     });
@@ -29,6 +37,9 @@ class HomeManager extends ChangeNotifier {
   //Entrar no modo de edição
   void enterEditing(){
     editing = true;
+
+    _editingSections = _sections.map((s) => s.clone()).toList();
+
     notifyListeners();
   }
 
