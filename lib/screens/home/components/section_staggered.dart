@@ -1,6 +1,9 @@
+import 'package:alice_store/models/home_manager.dart';
 import 'package:alice_store/models/section.dart';
+import 'package:alice_store/screens/home/components/add_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 
 import 'item_tile.dart';
 import 'section_header.dart';
@@ -13,25 +16,39 @@ class SectionStaggered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SectionHeader(section),
-          StaggeredGridView.countBuilder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            crossAxisCount: 4,
-            itemCount: section.items.length,
-            itemBuilder: (_, index){
-              return ItemTile(section.items[index]);
-            },
-            staggeredTileBuilder: (index) => StaggeredTile.count(2, index.isEven ? 2 : 1),
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
-          ),
-        ],
+    final homeManager = context.watch<HomeManager>();
+
+    return ChangeNotifierProvider.value(
+      value: section,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SectionHeader(),
+            Consumer<Section>(
+              builder: (_, section, __){
+                return StaggeredGridView.countBuilder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  crossAxisCount: 4,
+                  itemCount: homeManager.editing 
+                      ? section.items.length + 1
+                      : section.items.length,
+                  itemBuilder: (_, index){
+                    if(index < section.items.length)
+                      return ItemTile(section.items[index]);
+                    else
+                      return AddTileWidget();  
+                  },
+                  staggeredTileBuilder: (index) => StaggeredTile.count(2, index.isEven ? 2 : 1),
+                  mainAxisSpacing: 4,
+                  crossAxisSpacing: 4,
+                );
+              }
+            ),
+          ],
+        ),
       ),
     );
   }

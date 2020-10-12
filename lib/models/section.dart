@@ -1,7 +1,8 @@
 import 'package:alice_store/models/section_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
-class Section {
+class Section extends ChangeNotifier{
 
   String name;
   String type;
@@ -17,6 +18,12 @@ class Section {
     items = (document.data()['items'] as List).map(
       (i) => SectionItem.fromMap(i as Map<String, dynamic>)
     ).toList();
+  }
+
+  //Adiciona mais um item na sessão
+  void addItem(SectionItem item){
+    items.add(item);
+    notifyListeners();
   }
 
   Section clone(){
