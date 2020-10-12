@@ -8,7 +8,7 @@ class HomeManager extends ChangeNotifier {
 
   bool editing = false;
 
-  List<Section> _sections = [];
+  final List<Section> _sections = [];
   List<Section> _editingSections = [];
   List<Section> get sections {
     if(editing){
@@ -32,6 +32,18 @@ class HomeManager extends ChangeNotifier {
       }
       notifyListeners();
     });
+  }
+
+  //Adicionar uma nova sessão
+  void addSection(Section section){
+    _editingSections.add(section);
+    notifyListeners();
+  }
+
+  //Remover Sessão
+  void removeSection(Section section){
+    _editingSections.remove(section);
+    notifyListeners();
   }
 
   //Entrar no modo de edição

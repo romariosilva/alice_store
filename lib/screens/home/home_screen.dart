@@ -4,6 +4,7 @@ import 'package:alice_store/models/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'components/add_section_widget.dart';
 import 'components/section_list.dart';
 import 'components/section_staggered.dart';
 
@@ -91,6 +92,9 @@ class HomeScreen extends StatelessWidget {
                       }
                     }
                   ).toList();
+
+                  if(homeManager.editing)
+                    children.add(AddSectionWidget(homeManager));
 
                   return SliverList(
                     delegate: SliverChildListDelegate(children),
