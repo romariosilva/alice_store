@@ -66,7 +66,7 @@ class EditItemSize extends StatelessWidget {
                 return 'Inválido';
               return null;
             },
-            onChanged: (price) => size.price = int.tryParse(price),
+            onChanged: (price) => size.price = num.tryParse(price),
           ),
         ),
         CustomIconButton(

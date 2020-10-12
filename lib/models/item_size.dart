@@ -22,6 +22,14 @@ class ItemSize{
     );
   }
 
+  Map<String, dynamic> toMap(){
+    return {
+      'name': name,
+      'price': price,
+      'stock': stock
+    };
+  }
+
   @override
   String toString() {
     // TODO: implement toString
