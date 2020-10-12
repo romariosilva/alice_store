@@ -1,5 +1,6 @@
 import 'package:alice_store/common/custom_drawer/custom_drawer.dart';
 import 'package:alice_store/models/product_manager.dart';
+import 'package:alice_store/models/user_manager.dart';
 import 'package:alice_store/screens/products/components/product_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -75,7 +76,23 @@ class ProductsScreen extends StatelessWidget {
                 );
               }
             }
-          )
+          ),
+          Consumer<UserManager>(
+              builder: (_, userManager, __){
+                if(userManager.adminEnabled){
+                  return IconButton(
+                    icon: const Icon(Icons.add), 
+                    onPressed: (){
+                      Navigator.of(context).pushNamed(
+                        '/edit_product',
+                      );
+                    }
+                  );
+                } else {
+                  return Container();
+                }
+              }
+            )
         ],
       ),
       body: Consumer<ProductManager>(

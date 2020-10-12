@@ -10,6 +10,11 @@ class Product extends ChangeNotifier{
   List<String> images;
   List<ItemSize> sizes;
 
+  Product({this.idProduct, this.name, this.description, this.images, this.sizes}){
+    images = images ?? [];
+    sizes = sizes ?? [];
+  }
+
   //Verificar o tamanho selecionado
   ItemSize _selectedSize;
   ItemSize get selectedSize => _selectedSize;
@@ -58,6 +63,16 @@ class Product extends ChangeNotifier{
     } catch(e){
       return null;
     }
+  }
+
+  Product clone(){
+    return Product(
+      idProduct: idProduct,
+      name: name,
+      description: description,
+      images: List.from(images),
+      sizes: sizes.map((size) => size.clone()).toList(),
+    );
   }
 
 }
