@@ -9,6 +9,7 @@ import 'package:alice_store/screens/cart/cart_screen.dart';
 import 'package:alice_store/screens/edit_product/edit_product_screen.dart';
 import 'package:alice_store/screens/login/login_screen.dart';
 import 'package:alice_store/screens/product/product_screen.dart';
+import 'package:alice_store/screens/select_product/select_product_screen.dart';
 import 'package:alice_store/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -93,6 +94,11 @@ class MyApp extends StatelessWidget {
                 builder: (_) => EditProductScreen(
                   settings.arguments as Product
                 )
+              );
+              break;
+            case '/select_product':
+              return MaterialPageRoute(
+                builder: (_) => SelectProductScreen()
               );
               break;
             case '/base':

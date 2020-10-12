@@ -26,6 +26,12 @@ class Section extends ChangeNotifier{
     notifyListeners();
   }
 
+  //Remove um item na sessão
+  void removeItem(SectionItem item){
+    items.remove(item);
+    notifyListeners();
+  }
+
   Section clone(){
     return Section(
       name: name,
