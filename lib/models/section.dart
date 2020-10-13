@@ -97,6 +97,7 @@ class Section extends ChangeNotifier{
           final ref = await storage.getReferenceFromUrl(
             original.image as String
           );
+          await ref.delete();
         // ignore: empty_catches
         } catch(e){}
       }
@@ -116,6 +117,7 @@ class Section extends ChangeNotifier{
         final ref = await storage.getReferenceFromUrl(
           item.image as String
         );
+        await ref.delete();
       // ignore: empty_catches
       } catch(e){}
     }

@@ -4,6 +4,7 @@ import 'package:alice_store/models/home_manager.dart';
 import 'package:alice_store/models/product.dart';
 import 'package:alice_store/models/product_manager.dart';
 import 'package:alice_store/models/user_manager.dart';
+import 'package:alice_store/screens/address/address_screen.dart';
 import 'package:alice_store/screens/base/base_screen.dart';
 import 'package:alice_store/screens/cart/cart_screen.dart';
 import 'package:alice_store/screens/edit_product/edit_product_screen.dart';
@@ -11,15 +12,17 @@ import 'package:alice_store/screens/login/login_screen.dart';
 import 'package:alice_store/screens/product/product_screen.dart';
 import 'package:alice_store/screens/select_product/select_product_screen.dart';
 import 'package:alice_store/screens/signup/signup_screen.dart';
+import 'package:alice_store/service/cepaberto_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
   
+  CepAbertoService().getAddressFromCep('1234556');
 }
 
 class MyApp extends StatelessWidget {
@@ -87,6 +90,11 @@ class MyApp extends StatelessWidget {
             case '/cart':
               return MaterialPageRoute(
                 builder: (_) => CartScreen()
+              );
+              break;
+            case '/address':
+              return MaterialPageRoute(
+                builder: (_) => AddressScreen()
               );
               break;
             case '/edit_product':
