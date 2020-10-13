@@ -22,7 +22,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MyApp());
   
-  CepAbertoService().getAddressFromCep('1234556');
+  CepAbertoService().getAddressFromCep('60333090').then((value) => print(value));
 }
 
 class MyApp extends StatelessWidget {
