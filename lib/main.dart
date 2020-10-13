@@ -12,7 +12,6 @@ import 'package:alice_store/screens/login/login_screen.dart';
 import 'package:alice_store/screens/product/product_screen.dart';
 import 'package:alice_store/screens/select_product/select_product_screen.dart';
 import 'package:alice_store/screens/signup/signup_screen.dart';
-import 'package:alice_store/service/cepaberto_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,6 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MyApp());
   
-  CepAbertoService().getAddressFromCep('60333090').then((value) => print(value));
 }
 
 class MyApp extends StatelessWidget {
