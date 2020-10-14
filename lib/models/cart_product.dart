@@ -13,9 +13,14 @@ class CartProduct extends ChangeNotifier{
   int quantity;
   String size;
 
-  Product product;
+  Product _product;
+  Product get product => _product;
+  set product(Product value){
+    _product = value;
+    notifyListeners();
+  }
 
-  CartProduct.fromProduct(this.product){
+  CartProduct.fromProduct(this._product){
     productId = product.idProduct;
     quantity = 1;
     size = product.selectedSize.name;
@@ -31,7 +36,6 @@ class CartProduct extends ChangeNotifier{
     firestore.doc('products/$productId').get().then(
       (doc) {
         product = Product.fromDocument(doc);
-        notifyListeners();
       }
     );
   } 
