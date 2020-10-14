@@ -6,6 +6,7 @@ import 'package:alice_store/service/cepaberto_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:alice_store/models/address.dart';
+import 'package:geolocator/geolocator.dart';
 
 class CartManager extends ChangeNotifier{
 
@@ -15,6 +16,9 @@ class CartManager extends ChangeNotifier{
   Address address;
 
   num productsPrice = 0.0;
+  num deliveryPrice;
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   //Adcionar o produto ao carrinho, enviá-lo para o Firebase
   void addToCart(Product product){
@@ -116,6 +120,43 @@ class CartManager extends ChangeNotifier{
     } catch(e){
       debugPrint(e.toString());
     }
+  }
+
+  Future<void> setAddress(Address address) async{
+    this.address = address;
+
+    if(await calculateDelivery(address.lat, address.long)){
+      print('price $deliveryPrice');
+    } else {
+      return Future.error('Endereço fora do raio de entrega :(');
+    }
+  }
+
+  void removeAddress(){
+    address = null;
+    notifyListeners();
+  }
+
+  Future<bool> calculateDelivery(double lat, double long) async{
+    final DocumentSnapshot doc = await firestore.doc('aux/delivery').get();
+
+    final latStore = doc.data()['lat'] as double;
+    final longStore = doc.data()['long'] as double;
+    final maxKm = doc.data()['maxKm'] as num;
+    final base = doc.data()['base'] as num;
+    final km = doc.data()['km'] as num;
+
+    double dis = await distanceBetween(latStore, longStore, lat, long);
+    dis /= 1000.0; //Convertendo para kilômetros
+
+    debugPrint('Distância $dis'); 
+
+    if(dis > maxKm){
+      return false;
+    }
+
+    deliveryPrice = base + dis * km;
+    return true;
   }
 
 }
