@@ -5,12 +5,14 @@ import 'package:alice_store/models/user_manager.dart';
 import 'package:alice_store/service/cepaberto_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:alice_store/models/address.dart';
 
 class CartManager extends ChangeNotifier{
 
   List<CartProduct> items = [];
 
   UserData user;
+  Address address;
 
   num productsPrice = 0.0;
 
@@ -97,9 +99,20 @@ class CartManager extends ChangeNotifier{
     final cepAbertoService = CepAbertoService();
 
     try{
-      final address = await cepAbertoService.getAddressFromCep(cep);
-
-      print(address);
+      final cepAbertoAddress = await cepAbertoService.getAddressFromCep(cep);
+      
+      if(cepAbertoAddress != null){
+        address = Address(
+          street: cepAbertoAddress.logradouro,
+          district: cepAbertoAddress.bairro,
+          zipCode: cepAbertoAddress.cep,
+          city: cepAbertoAddress.cidade.nome,
+          state: cepAbertoAddress.estado.sigla,
+          lat: cepAbertoAddress.latitude,
+          long: cepAbertoAddress.longitude
+        );
+        notifyListeners();
+      }
     } catch(e){
       debugPrint(e.toString());
     }
