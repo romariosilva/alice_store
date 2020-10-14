@@ -13,15 +13,17 @@ class AddressInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final cartManager = context.watch<CartManager>();
 
     String emptyValidator(String text) =>
         text.isEmpty ? 'Campo obrigatório' : null;
 
-    if(address.zipCode != null)
+    if(address.zipCode != null && cartManager.deliveryPrice == null)
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextFormField(
+            enabled: !cartManager.loading,
             initialValue: address.street,
             decoration: const InputDecoration(
               isDense: true,
@@ -35,6 +37,7 @@ class AddressInputField extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: TextFormField(
+                  enabled: !cartManager.loading,
                   initialValue: address.number,
                   decoration: const InputDecoration(
                       isDense: true,
@@ -54,6 +57,7 @@ class AddressInputField extends StatelessWidget {
               ),
               Expanded(
                 child: TextFormField(
+                  enabled: !cartManager.loading,
                   initialValue: address.complement,
                   decoration: const InputDecoration(
                     isDense: true,
@@ -66,6 +70,7 @@ class AddressInputField extends StatelessWidget {
             ],
           ),
           TextFormField(
+            enabled: !cartManager.loading,
             initialValue: address.district,
             decoration: const InputDecoration(
               isDense: true,
@@ -121,11 +126,16 @@ class AddressInputField extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8,),
+          if(cartManager.loading)
+            LinearProgressIndicator(
+              valueColor: AlwaysStoppedAnimation(primaryColor),
+              backgroundColor: Colors.transparent,
+            ),
           RaisedButton(
             color: primaryColor,
             disabledColor: primaryColor.withAlpha(100),
             textColor: Colors.white,
-            onPressed: () async{
+            onPressed: !cartManager.loading ? () async{
               if(Form.of(context).validate()){
                 Form.of(context).save();
                 try{
@@ -139,12 +149,19 @@ class AddressInputField extends StatelessWidget {
                   );
                 }
               }
-            },
+            } : null,
             child: const Text('Calcular Frete'),
           ),
         ],
       );
-    else
-      return Container();
+    else if(address.zipCode != null)
+      return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Text(
+                        '${address.street}, ${address.number}\n${address.district}\n'
+                          '${address.city} - ${address.street}'
+                      ),
+                    );
+    else return Container();
   }
 }

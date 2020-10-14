@@ -7,8 +7,13 @@ import 'package:alice_store/screens/products/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BaseScreen extends StatelessWidget {
+class BaseScreen extends StatefulWidget {
 
+  @override
+  _BaseScreenState createState() => _BaseScreenState();
+}
+
+class _BaseScreenState extends State<BaseScreen> {
   final PageController pageController = PageController();
 
   @override
@@ -36,7 +41,7 @@ class BaseScreen extends StatelessWidget {
                 ),
               ),
               if(userManager.adminEnabled)
-              //os ... adciona uma ista dentro de outra
+              //os ... adciona uma lista dentro de outra
               ...[
                 AdminUsersScreen(),
                 Scaffold(

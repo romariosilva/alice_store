@@ -18,6 +18,15 @@ class CartManager extends ChangeNotifier{
   num productsPrice = 0.0;
   num deliveryPrice;
 
+  num get totalPrice => productsPrice + (deliveryPrice ?? 0);
+
+  bool _loading = false;
+  bool get loading => _loading;
+  set loading(bool value){
+    _loading = value;
+    notifyListeners();
+  }
+
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   //Adcionar o produto ao carrinho, enviá-lo para o Firebase
@@ -73,10 +82,13 @@ class CartManager extends ChangeNotifier{
   //Método para ao mudar o usuário, poder carregar o cart deste
   void updateUser(UserManager userManager){
     user = userManager.user;
+    productsPrice = 0.0;
     items.clear();
+    removeAddress();
 
     if(user != null){
       _loadCartItems();
+      _loadUserAddress();
     }
   }
 
@@ -89,6 +101,14 @@ class CartManager extends ChangeNotifier{
     ).toList();
   }
 
+  //Já carrega os dados de endereço do usuário
+  Future<void> _loadUserAddress() async {
+    if(user.address != null && await calculateDelivery(user.address.lat, user.address.long)){
+      address = user.address;
+      notifyListeners();
+    }
+  }
+
   //Verificando se tem estoqe suficiente
   bool get isCartValid{
     for(final cartProduct in items){
@@ -97,9 +117,14 @@ class CartManager extends ChangeNotifier{
     return true;
   }
 
+  bool get isAddressValid => address != null && deliveryPrice != null;
+
   // ADDRESS
 
+  //Pega o endereço da API
   Future<void> getAddress(String cep) async{
+    loading = true;
+
     final cepAbertoService = CepAbertoService();
 
     try{
@@ -115,25 +140,33 @@ class CartManager extends ChangeNotifier{
           lat: cepAbertoAddress.latitude,
           long: cepAbertoAddress.longitude
         );
-        notifyListeners();
       }
+
+      loading = false;
     } catch(e){
-      debugPrint(e.toString());
+      loading = false;
+      return Future.error('CEP Inválido');
     }
   }
 
+  //Seta o endereço e calcula o frete
   Future<void> setAddress(Address address) async{
+    loading = true;
+
     this.address = address;
 
     if(await calculateDelivery(address.lat, address.long)){
-      print('price $deliveryPrice');
+      user.setAddress(address);
+      loading = false;
     } else {
+      loading = false;
       return Future.error('Endereço fora do raio de entrega :(');
     }
   }
 
   void removeAddress(){
     address = null;
+    deliveryPrice = null;
     notifyListeners();
   }
 
