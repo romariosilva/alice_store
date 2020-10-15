@@ -3,6 +3,7 @@ import 'package:alice_store/models/page_manager.dart';
 import 'package:alice_store/models/user_manager.dart';
 import 'package:alice_store/screens/admin_users/admin_users_screen.dart';
 import 'package:alice_store/screens/home/home_screen.dart';
+import 'package:alice_store/screens/orders/orders_screen.dart';
 import 'package:alice_store/screens/products/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,12 +29,7 @@ class _BaseScreenState extends State<BaseScreen> {
             children: [
               HomeScreen(),
               ProductsScreen(),
-              Scaffold(
-                drawer: CustomDrawer(),
-                appBar: AppBar(
-                  title: const Text('Home3'),
-                ),
-              ),
+              OrdersScreen(),
               Scaffold(
                 drawer: CustomDrawer(),
                 appBar: AppBar(
