@@ -61,6 +61,15 @@ class CartProduct extends ChangeNotifier{
     };
   }
 
+   Map<String, dynamic> toOrderItemMap(){
+    return {
+      'pid': productId,
+      'quantity': quantity,
+      'size': size,
+
+    };
+  }
+
   //Método que verifica se pode juntar no mesmo card um produto se tiver o mesmo tamanho e ID
   bool stackable(Product product){
     return product.idProduct == productId && product.selectedSize.name == size;
