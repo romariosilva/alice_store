@@ -1,14 +1,11 @@
 import 'dart:async';
 
-import 'package:alice_store/models/user_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'order.dart';
 
-class OrdersManager extends ChangeNotifier {
-
-  UserData user;
+class AdminOrdersManager extends ChangeNotifier {
 
   List<Order> orders = [];
 
@@ -16,26 +13,23 @@ class OrdersManager extends ChangeNotifier {
 
   StreamSubscription _subscription;
 
-  void updateUser(UserData user){
-    this.user = user;
+  void updateAdmin({bool adminEnabled}){
     orders.clear();
 
     _subscription?.cancel();
-    if(user != null){
+    if(adminEnabled){
       _listenToOrders();
     }
   }
 
-  //Listar os pedidos logados
   void _listenToOrders(){
-    _subscription = firestore.collection('orders').where('user', isEqualTo: user.id)
-        .snapshots().listen(
-    (event) {
-      orders.clear();
-      for(final doc in event.docs){
-        orders.add(Order.fromDocument(doc));
-      }
-      notifyListeners();
+    _subscription = firestore.collection('orders').snapshots().listen(
+      (event) {
+        orders.clear();
+        for(final doc in event.docs){
+          orders.add(Order.fromDocument(doc));
+        }
+        notifyListeners();
     });
   }
 

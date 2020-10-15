@@ -1,6 +1,8 @@
+import 'package:alice_store/models/admin_orders_manager.dart';
 import 'package:alice_store/models/admin_users_manager.dart';
 import 'package:alice_store/models/cart_manager.dart';
 import 'package:alice_store/models/home_manager.dart';
+import 'package:alice_store/models/order.dart';
 import 'package:alice_store/models/orders_manager.dart';
 import 'package:alice_store/models/product.dart';
 import 'package:alice_store/models/product_manager.dart';
@@ -9,6 +11,7 @@ import 'package:alice_store/screens/address/address_screen.dart';
 import 'package:alice_store/screens/base/base_screen.dart';
 import 'package:alice_store/screens/cart/cart_screen.dart';
 import 'package:alice_store/screens/checkout/checkout_screen.dart';
+import 'package:alice_store/screens/confirmation/confirmation_screen.dart';
 import 'package:alice_store/screens/edit_product/edit_product_screen.dart';
 import 'package:alice_store/screens/login/login_screen.dart';
 import 'package:alice_store/screens/product/product_screen.dart';
@@ -61,6 +64,14 @@ class MyApp extends StatelessWidget {
           update: (_, userManager, adminUsersManager) =>
             adminUsersManager..updateUser(userManager),
         ),
+        ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
+          create: (_) => AdminOrdersManager(),
+          lazy: false,
+          update: (_, userManager, adminOrdersManager) =>
+            adminOrdersManager..updateAdmin(
+              adminEnabled: userManager.adminEnabled
+            ),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -121,6 +132,12 @@ class MyApp extends StatelessWidget {
                 builder: (_) => CheckoutScreen()
               );
               break;
+            case '/confirmation':
+              return MaterialPageRoute(
+                  builder: (_) => ConfirmationScreen(
+                    settings.arguments as Order
+                  )
+              );
             case '/base':
             default:
               return MaterialPageRoute(
