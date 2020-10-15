@@ -22,6 +22,7 @@ class Order {
   Status status;
 
   String get formattedId => '#${orderId.padLeft(6, '0')}';
+  String get statusText => getStatusText(status);
 
   Order.fromCartManager(CartManager cartManager){
     items = List.from(cartManager.items);
@@ -61,8 +62,6 @@ class Order {
     );
   }
 
-  String get statusText => getStatusText(status);
-
   static String getStatusText(Status status) {
     switch(status){
       case Status.canceled:
@@ -76,6 +75,28 @@ class Order {
       default:
         return '';
     }
+  }
+
+  //Voltar um status
+  Function() get back {
+    return status.index >= Status.transporting.index ?
+      (){
+        status = Status.values[status.index - 1];
+        firestore.collection('orders').doc(orderId).update(
+          {'status': status.index}
+        );
+      } : null;
+  }
+  
+  //Avançar um status
+  Function() get advance {
+    return status.index <= Status.transporting.index ?
+      (){
+        status = Status.values[status.index + 1];
+        firestore.collection('orders').doc(orderId).update(
+          {'status': status.index}
+        );
+      } : null;
   }
 
   @override

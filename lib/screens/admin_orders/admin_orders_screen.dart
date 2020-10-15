@@ -1,7 +1,7 @@
 import 'package:alice_store/common/custom_drawer/custom_drawer.dart';
 import 'package:alice_store/common/empty_card.dart';
+import 'package:alice_store/common/order/order_tile.dart';
 import 'package:alice_store/models/admin_orders_manager.dart';
-import 'package:alice_store/screens/orders/components/order_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,8 @@ class AdminOrdersScreen extends StatelessWidget {
             itemCount: ordersManager.orders.length,
             itemBuilder: (_, index){
               return OrderTile(
-                ordersManager.orders.reversed.toList()[index]
+                ordersManager.orders.reversed.toList()[index],
+                showControls: true,
               );
             }
           );

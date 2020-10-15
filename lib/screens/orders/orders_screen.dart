@@ -1,11 +1,10 @@
 import 'package:alice_store/common/custom_drawer/custom_drawer.dart';
 import 'package:alice_store/common/empty_card.dart';
 import 'package:alice_store/common/login_card.dart';
+import 'package:alice_store/common/order/order_tile.dart';
 import 'package:alice_store/models/orders_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'components/order_tile.dart';
 
 class OrdersScreen extends StatelessWidget {
   @override

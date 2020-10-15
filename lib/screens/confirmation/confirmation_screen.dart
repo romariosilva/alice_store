@@ -1,5 +1,5 @@
+import 'package:alice_store/common/order/order_product_tile.dart';
 import 'package:alice_store/models/order.dart';
-import 'package:alice_store/screens/orders/components/order_product_tile.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmationScreen extends StatelessWidget {
