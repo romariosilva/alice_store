@@ -54,6 +54,15 @@ class CartManager extends ChangeNotifier{
     notifyListeners();
   }
 
+  //Limpar o carrinho do usuário
+  void clear(){
+    for(final cartProduct in items){
+      user.cartReference.doc(cartProduct.productId).delete();
+    }
+    items.clear();
+    notifyListeners();
+  }
+
   // Adiciona a quantidade no Firebase
   void _onItemUpdated(){
     productsPrice = 0.0;
