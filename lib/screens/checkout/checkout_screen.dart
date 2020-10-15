@@ -1,6 +1,7 @@
 import 'package:alice_store/common/price_card.dart';
 import 'package:alice_store/models/cart_manager.dart';
 import 'package:alice_store/models/checkout_manager.dart';
+import 'package:alice_store/models/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,7 @@ class CheckoutScreen extends StatelessWidget {
             if(checkoutManager.loading){
               return Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
                     CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation(Colors.white),
