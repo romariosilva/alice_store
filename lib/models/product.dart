@@ -84,7 +84,7 @@ class Product extends ChangeNotifier{
 
     //Remove as imagens que não estão sendo utilizadas
     for(final image in images){
-      if(!newImages.contains(image)){
+      if(!newImages.contains(image) && image.contains('firebase')){
         try{
           final ref = await storage.getReferenceFromUrl(image);
           await ref.delete();

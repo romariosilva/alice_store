@@ -35,17 +35,6 @@ class ExportAddressDialog extends StatelessWidget {
             Navigator.of(context).pop();
             final file= await screenshotController.capture();
             await GallerySaver.saveImage(file.path);
-            AlertDialog(
-              content: const Text('Exportado com sucesso, verifique nas galerias'),
-              actions: [
-                FlatButton(
-                  onPressed: (){
-                    Navigator.of(context).pop();
-                  }, 
-                  child: const Text('Voltar')
-                )
-              ],
-            );
           },
           textColor: Theme.of(context).primaryColor,
           child: const Text('Exportar'),
