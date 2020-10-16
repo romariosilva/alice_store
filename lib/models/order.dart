@@ -24,6 +24,10 @@ class Order {
   String get formattedId => '#${orderId.padLeft(6, '0')}';
   String get statusText => getStatusText(status);
 
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  DocumentReference get firestoreRef => firestore.collection('orders').doc(orderId);
+
   Order.fromCartManager(CartManager cartManager){
     items = List.from(cartManager.items);
     price = cartManager.totalPrice;
@@ -47,7 +51,9 @@ class Order {
     status = Status.values[doc.data()['status'] as int];
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  void updateFromDocument(DocumentSnapshot doc){
+    status = Status.values[doc.data()['status'] as int];
+  }
 
   Future<void> save() async {
     firestore.collection('orders').doc(orderId).set(
@@ -82,9 +88,7 @@ class Order {
     return status.index >= Status.transporting.index ?
       (){
         status = Status.values[status.index - 1];
-        firestore.collection('orders').doc(orderId).update(
-          {'status': status.index}
-        );
+        firestoreRef.update({'status': status.index});
       } : null;
   }
   
@@ -93,10 +97,14 @@ class Order {
     return status.index <= Status.transporting.index ?
       (){
         status = Status.values[status.index + 1];
-        firestore.collection('orders').doc(orderId).update(
-          {'status': status.index}
-        );
+        firestoreRef.update({'status': status.index});
       } : null;
+  }
+
+  //Cancelar pedido
+  void cancel(){
+    status = Status.canceled;
+    firestoreRef.update({'status': status.index});
   }
 
   @override
