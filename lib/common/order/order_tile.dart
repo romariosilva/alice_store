@@ -1,6 +1,8 @@
 import 'package:alice_store/models/order.dart';
 import 'package:flutter/material.dart';
 
+import 'cancel_order_dialog.dart';
+import 'export_address_dialog.dart';
 import 'order_product_tile.dart';
 
 class OrderTile extends StatelessWidget {
@@ -64,7 +66,11 @@ class OrderTile extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: order.cancel,
+                    onPressed: (){
+                      showDialog(context: context,
+                        builder: (_) => CancelOrderDialog(order)
+                      );
+                    },
                     textColor: Colors.red,
                     child: const Text('Cancelar'),
                   ),
@@ -77,7 +83,11 @@ class OrderTile extends StatelessWidget {
                     child: const Text('Avançar'),
                   ),
                   FlatButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      showDialog(context: context,
+                        builder: (_) => ExportAddressDialog(order.address)
+                      );
+                    },
                     textColor: primaryColor,
                     child: const Text('Endereço'),
                   )
