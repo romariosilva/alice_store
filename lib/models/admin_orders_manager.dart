@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:alice_store/models/user_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -7,14 +8,16 @@ import 'order.dart';
 
 class AdminOrdersManager extends ChangeNotifier {
 
-  List<Order> orders = [];
+  List<Order> _orders = [];
+
+  UserData userFilter;
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   StreamSubscription _subscription;
 
   void updateAdmin({bool adminEnabled}){
-    orders.clear();
+    _orders.clear();
 
     _subscription?.cancel();
     if(adminEnabled){
@@ -28,12 +31,12 @@ class AdminOrdersManager extends ChangeNotifier {
         for(final change in event.docChanges){
           switch(change.type){
             case DocumentChangeType.added:
-              orders.add(
+              _orders.add(
                 Order.fromDocument(change.doc)
               );
               break;
             case DocumentChangeType.modified:
-              final modOrder = orders.firstWhere((o) => o.orderId == change.doc.id);
+              final modOrder = _orders.firstWhere((o) => o.orderId == change.doc.id);
               modOrder.updateFromDocument(change.doc);
               break;
             case DocumentChangeType.removed:
@@ -43,6 +46,21 @@ class AdminOrdersManager extends ChangeNotifier {
         }
         notifyListeners();
     });
+  }
+
+  void setUserFilter(UserData user){
+    userFilter = user;
+    notifyListeners();
+  }
+
+  List<Order> get filteredOrders {
+    List<Order> output = _orders.reversed.toList();
+
+    if(userFilter != null){
+      output = output.where((o) => o.userId == userFilter.id).toList();
+    }
+
+    return output;
   }
 
   @override
