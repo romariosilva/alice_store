@@ -188,6 +188,7 @@ class CartManager extends ChangeNotifier{
     final base = doc.data()['base'] as num;
     final km = doc.data()['km'] as num;
 
+    // ignore: await_only_futures
     double dis = await distanceBetween(latStore, longStore, lat, long);
     dis /= 1000.0; //Convertendo para kilômetros
 

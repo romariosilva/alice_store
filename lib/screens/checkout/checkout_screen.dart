@@ -1,7 +1,6 @@
 import 'package:alice_store/common/price_card.dart';
 import 'package:alice_store/models/cart_manager.dart';
 import 'package:alice_store/models/checkout_manager.dart';
-import 'package:alice_store/models/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
