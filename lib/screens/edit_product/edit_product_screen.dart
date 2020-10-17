@@ -3,6 +3,7 @@ import 'package:alice_store/models/product_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'components/deleted_product.dart';
 import 'components/images_form.dart';
 import 'components/sizes_form.dart';
 
@@ -26,7 +27,19 @@ class EditProductScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(editing ? 'Editar Produto' : 'Criar Produto'),
-          centerTitle: true
+          centerTitle: true,
+          actions: [
+            if(editing)
+            IconButton(
+              icon: const Icon(Icons.delete), 
+              onPressed: (){
+                showDialog(
+                  context: context,
+                  builder: (_) => DeletedProduct(product)
+                );
+              }
+            )
+          ],
         ),
         backgroundColor: Colors.white,
         body: Form(

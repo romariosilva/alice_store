@@ -15,6 +15,14 @@ class CancelOrderDialog extends StatelessWidget {
       actions: <Widget>[
         FlatButton(
           onPressed: (){
+            Navigator.of(context).pop();
+          },
+          color: Theme.of(context).primaryColor,
+          textColor: Colors.white,
+          child: const Text('Cancelar')
+        ),
+        FlatButton(
+          onPressed: (){
             order.cancel();
             Navigator.of(context).pop();
           },
