@@ -6,6 +6,7 @@ import 'package:alice_store/models/order.dart';
 import 'package:alice_store/models/orders_manager.dart';
 import 'package:alice_store/models/product.dart';
 import 'package:alice_store/models/product_manager.dart';
+import 'package:alice_store/models/stores_manager.dart';
 import 'package:alice_store/models/user_manager.dart';
 import 'package:alice_store/screens/address/address_screen.dart';
 import 'package:alice_store/screens/base/base_screen.dart';
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => HomeManager(),
           lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => StoresManager()
         ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
           create: (_) => CartManager(),
