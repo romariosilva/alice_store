@@ -47,5 +47,13 @@
 	<String>Acessar Câmera para Adicionar imagem</String>
 	<key>NSMicrophoneUsageDescription</key>
 	<String>Acessar Câmera para Adicionar imagem</String>
+
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>comgooglemaps</string>
+		<string>baidumap</string>
+		<string>iosamap</string>
+		<string>waze</string>
+	</array>
 </dict>
 </plist>

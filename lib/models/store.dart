@@ -26,7 +26,7 @@ class Store {
       final timesString = value as String;
 
       if(timesString != null && timesString.isNotEmpty){
-        final splitted = timesString.split(RegExp(r"[:-]"));
+        final splitted = timesString.split(RegExp("[:-]"));
 
         return MapEntry(
           key,
@@ -91,5 +91,20 @@ class Store {
       status = StoreStatus.closed;
     }
   }
+
+  String get statusText {
+    switch(status){
+      case StoreStatus.closed:
+        return 'Fechada';
+      case StoreStatus.open:
+        return 'Aberta';
+      case StoreStatus.closing:
+        return 'Fechando';
+      default:
+        return '';
+    }
+  }
+
+  String get cleanPhone => phone.replaceAll(RegExp(r"[^\d]"), "");
 
 } 
