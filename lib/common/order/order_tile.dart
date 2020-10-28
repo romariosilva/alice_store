@@ -85,7 +85,7 @@ class OrderTile extends StatelessWidget {
                   FlatButton(
                     onPressed: (){
                       showDialog(context: context,
-                        builder: (_) => ExportAddressDialog(order.address)
+                        builder: (_) => ExportAddressDialog(order.address, order.payment)
                       );
                     },
                     textColor: primaryColor,

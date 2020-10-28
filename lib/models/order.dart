@@ -9,6 +9,7 @@ enum Status { canceled, preparing, transporting, delivered }
 class Order {
 
   String orderId;
+  String payment;
 
   List<CartProduct> items;
   num price;
@@ -49,6 +50,7 @@ class Order {
     date = doc.data()['date'] as Timestamp;
 
     status = Status.values[doc.data()['status'] as int];
+    payment = doc.data()['payment'] as String;
   }
 
   void updateFromDocument(DocumentSnapshot doc){
@@ -64,6 +66,7 @@ class Order {
         'address': address.toMap(),
         'status': status.index,
         'date': Timestamp.now(),
+        'payment': payment
       }
     );
   }

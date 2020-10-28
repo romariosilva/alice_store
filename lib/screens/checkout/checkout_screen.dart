@@ -4,6 +4,8 @@ import 'package:alice_store/models/checkout_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'components/payment_methods_card.dart';
+
 class CheckoutScreen extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -46,6 +48,7 @@ class CheckoutScreen extends StatelessWidget {
 
             return ListView(
               children: [
+                PaymentMethodsCard(),
                 PriceCard(
                   buttonText: 'Finalizar Pedido',
                   onPressed: (){

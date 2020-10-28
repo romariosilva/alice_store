@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 class CheckoutManager  extends ChangeNotifier{
 
+  String payment;
   CartManager cartManager;
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -22,7 +23,7 @@ class CheckoutManager  extends ChangeNotifier{
     this.cartManager = cartManager;
   }
 
-  Future<void> checkout({Function onStockFail, Function onSuccess}) async{
+  Future<void> checkout({Function onStockFail, Function onSuccess}) async {
     loading = true;
 
     try{
@@ -39,6 +40,7 @@ class CheckoutManager  extends ChangeNotifier{
 
     final order = Order.fromCartManager(cartManager);
     order.orderId = orderId.toString();
+    order.payment = payment;
 
     await order.save();
 
@@ -46,6 +48,16 @@ class CheckoutManager  extends ChangeNotifier{
 
     onSuccess(order);
     loading = false;
+  }
+
+  //Método para pegar a forma de pagamento
+  void getPayment(int val){
+    if(val == 1){
+      payment = 'Pagamento em dinheiro';
+    } else {
+      payment = 'Pagamento no cartão';
+    }
+    print(payment);
   }
 
   //Verifica as orders dos pedidos

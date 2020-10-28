@@ -5,9 +5,10 @@ import 'package:screenshot/screenshot.dart';
 
 class ExportAddressDialog extends StatelessWidget {
 
-  ExportAddressDialog(this.address);
+  ExportAddressDialog(this.address, this.payment);
 
   final Address address;
+  final String payment;
 
   final ScreenshotController screenshotController = ScreenshotController();
 
@@ -24,7 +25,8 @@ class ExportAddressDialog extends StatelessWidget {
             '${address.street}, ${address.number} ${address.complement}\n'
             '${address.district}\n'
             '${address.city}/${address.state}\n'
-            '${address.zipCode}',
+            '${address.zipCode}\n'
+            '$payment'
           ),
         ),
       ),
