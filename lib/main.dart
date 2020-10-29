@@ -18,15 +18,19 @@ import 'package:alice_store/screens/login/login_screen.dart';
 import 'package:alice_store/screens/product/product_screen.dart';
 import 'package:alice_store/screens/select_product/select_product_screen.dart';
 import 'package:alice_store/screens/signup/signup_screen.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
   
+  final response = await CloudFunctions.instance.getHttpsCallable(functionName: 'helloWorld').call();
+  print(response.data);
 }
 
 class MyApp extends StatelessWidget {

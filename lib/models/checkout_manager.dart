@@ -57,7 +57,6 @@ class CheckoutManager  extends ChangeNotifier{
     } else {
       payment = 'Pagamento no cartão';
     }
-    print(payment);
   }
 
   //Verifica as orders dos pedidos
