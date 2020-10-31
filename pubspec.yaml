@@ -52,6 +52,8 @@ dependencies:
   url_launcher: ^5.7.5
   map_launcher: ^0.12.2
   cloud_functions: ^0.6.0+1
+  firebase_messaging: ^7.0.3
+  flushbar: ^1.10.4
 
 dev_dependencies:
   flutter_test:

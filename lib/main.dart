@@ -29,8 +29,6 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MyApp());
   
-  final response = await CloudFunctions.instance.getHttpsCallable(functionName: 'helloWorld').call();
-  print(response.data);
 }
 
 class MyApp extends StatelessWidget {

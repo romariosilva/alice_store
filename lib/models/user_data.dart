@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:alice_store/models/address.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class UserData {
 
@@ -26,6 +29,7 @@ class UserData {
   DocumentReference get firestoreRef => FirebaseFirestore.instance.doc('users/$id');
 
   CollectionReference get cartReference => firestoreRef.collection('cart');
+  CollectionReference get tokensReference => firestoreRef.collection('tokens');
 
   //Método para salvar os dados do usuário no Firebase
   Future<void> saveData() async{
@@ -44,6 +48,15 @@ class UserData {
   void setAddress(Address address){
     this.address = address;
     saveData();
+  }
+
+  Future<void> saveToken() async {
+    final token = await FirebaseMessaging().getToken();
+    await tokensReference.doc(token).set({
+      'token': token,
+      'updateAt': FieldValue.serverTimestamp(),
+      'platform': Platform.operatingSystem,
+    });
   }
 
 }
